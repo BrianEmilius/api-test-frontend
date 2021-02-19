@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import axios from "axios";
+import { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
+  var [users, setUsers] = useState([]);
+
+  useEffect(function() {
+    axios.get("https://brian-api-test.herokuapp.com/users")
+      .then(response => console.log(response.data));
+  }, [setUsers]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {users.map(user => {
+        <p key={user._id}>{user.credentials.email?.email}</p>
+      })}
     </div>
   );
 }
